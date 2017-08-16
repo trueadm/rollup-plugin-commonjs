@@ -8,7 +8,12 @@ export default {
 	entry: 'src/index.js',
 	plugins: [
 		buble({
-			transforms: { dangerousForOf: true }
+			include: [
+				'src/**',
+				'node_modules/acorn/**',
+				'node_modules/acorn-jsx/**',
+			],
+			transforms: { dangerousForOf: true },
 		})
 	],
 	external: external,

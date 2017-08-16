@@ -1,4 +1,4 @@
-import acorn from 'acorn';
+import acorn from 'acorn-jsx';
 import { walk } from 'estree-walker';
 import MagicString from 'magic-string';
 import { attachScopes, makeLegalIdentifier } from 'rollup-pluginutils';
@@ -31,10 +31,11 @@ function tryParse ( code, id ) {
 		return acorn.parse( code, {
 			ecmaVersion: 8,
 			sourceType: 'module',
-			allowReturnOutsideFunction: true
+			allowReturnOutsideFunction: true,
+			plugins: { jsx: true }
 		});
 	} catch ( err ) {
-		err.message += ` in ${id}`;
+		err.message += ` in ${id} ${code}`;
 		throw err;
 	}
 }

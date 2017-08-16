@@ -19,7 +19,8 @@
     "README.md"
   ],
   "dependencies": {
-    "acorn": "^4.0.1",
+    "acorn": "^5.1.1",
+    "acorn-jsx": "^4.0.1",
     "estree-walker": "^0.3.0",
     "magic-string": "^0.19.0",
     "resolve": "^1.1.7",
