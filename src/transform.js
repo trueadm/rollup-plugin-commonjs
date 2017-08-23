@@ -1,10 +1,15 @@
-import acorn from 'acorn-jsx';
+const acorn = require('acorn');
+const injectAcornJsx = require('acorn-jsx/inject');
+const injectAcornObjectRestSpread = require('acorn-object-rest-spread/inject');
 import { walk } from 'estree-walker';
 import MagicString from 'magic-string';
 import { attachScopes, makeLegalIdentifier } from 'rollup-pluginutils';
 import { extractNames, flatten, isReference, isTruthy, isFalsy } from './ast-utils.js';
 import { PREFIX, HELPERS_ID } from './helpers.js';
 import { getName } from './utils.js';
+
+injectAcornJsx(acorn);
+injectAcornObjectRestSpread(acorn);
 
 const reserved = 'abstract arguments boolean break byte case catch char class const continue debugger default delete do double else enum eval export extends false final finally float for function goto if implements import in instanceof int interface let long native new null package private protected public return short static super switch synchronized this throw throws transient true try typeof var void volatile while with yield'.split( ' ' );
 const blacklist = { __esModule: true };
@@ -32,7 +37,7 @@ function tryParse ( code, id ) {
 			ecmaVersion: 8,
 			sourceType: 'module',
 			allowReturnOutsideFunction: true,
-			plugins: { jsx: true }
+			plugins: { jsx: true, objectRestSpread: true }
 		});
 	} catch ( err ) {
 		err.message += ` in ${id} ${code}`;
