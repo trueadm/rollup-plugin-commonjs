@@ -45,7 +45,7 @@ function tryParse ( code, id ) {
 	}
 }
 
-export default function transformCommonjs ( code, id, isEntry, ignoreGlobal, ignoreRequire, customNamedExports, sourceMap, allowDynamicRequire ) {
+export default function transformCommonjs ( code, id, isEntry, ignoreGlobal, ignoreRequire, customNamedExports, sourceMap, allowDynamicRequire, noWrap ) {
 	const firstpass = ignoreGlobal ? firstpassNoGlobal : firstpassGlobal;
 	if ( !firstpass.test( code ) ) return null;
 
@@ -343,7 +343,7 @@ export default function transformCommonjs ( code, id, isEntry, ignoreGlobal, ign
 	const defaultExportPropertyAssignments = [];
 	let hasDefaultExport = false;
 
-	if ( shouldWrap ) {
+	if ( shouldWrap && !noWrap ) {
 		const args = `module${uses.exports ? ', exports' : ''}`;
 
 		wrapperStart = `var ${moduleName} = ${HELPERS_NAME}.createCommonjsModule(function (${args}) {\n`;

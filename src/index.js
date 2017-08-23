@@ -42,6 +42,7 @@ export default function commonjs ( options = {} ) {
 	const extensions = options.extensions || ['.js'];
 	const filter = createFilter( options.include, options.exclude );
 	const ignoreGlobal = options.ignoreGlobal;
+	const noWrap = options.noWrap || false;
 
 	const customNamedExports = {};
 	if ( options.namedExports ) {
@@ -164,7 +165,7 @@ export default function commonjs ( options = {} ) {
 			if ( extensions.indexOf( extname( id ) ) === -1 ) return null;
 
 			return entryModuleIdPromise.then( () => {
-				const transformed = transformCommonjs( code, id, id === entryModuleId, ignoreGlobal, ignoreRequire, customNamedExports[ id ], sourceMap, allowDynamicRequire );
+				const transformed = transformCommonjs( code, id, id === entryModuleId, ignoreGlobal, ignoreRequire, customNamedExports[ id ], sourceMap, allowDynamicRequire, noWrap );
 
 				if ( transformed ) {
 					commonjsModules.set( id, true );
